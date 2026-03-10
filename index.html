@@ -3,179 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Strategy Lab v3.4</title>
+    <title>Strategy Lab v5.7</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .input-card { @apply bg-white px-6 py-5 rounded-2xl shadow-sm border border-gray-100 mb-3 flex justify-between items-center transition-all; }
-        input { @apply text-right text-xl font-bold text-slate-800 bg-transparent outline-none w-1/2; }
-        label { @apply text-[10px] font-black text-slate-400 uppercase tracking-widest w-1/2; }
-        .bar-segment { @apply h-full transition-all duration-700 ease-out; }
-        /* Modal Scroll Styling */
-        .manual-text h3 { @apply text-slate-900 font-extrabold text-xs uppercase tracking-wider mt-6 mb-2 flex items-center; }
-        .manual-text p { @apply text-slate-600 text-sm mb-4 leading-relaxed; }
-        .manual-text strong { @apply text-slate-900; }
+        .input-card { @apply bg-white px-8 py-5 rounded-2xl shadow-sm border border-gray-100 mb-2 flex items-center justify-between; }
+        .input-label { font-family: 'JetBrains Mono', monospace; @apply text-[10px] font-extrabold text-slate-500 uppercase tracking-[0.12em] flex-grow; }
+        .input-wrapper { width: 140px; @apply flex items-center justify-end; }
+        input { font-family: 'Inter', sans-serif; @apply text-right text-2xl font-black text-slate-900 bg-transparent outline-none w-full py-1; }
+        
+        /* MODAL ANIMATION */
+        #manualModal.closed { opacity: 0; pointer-events: none; visibility: hidden; transform: scale(0.98); }
+        #manualModal.open { opacity: 1; pointer-events: auto; visibility: visible; transform: scale(1); }
+        
+        .guide-section h3 { @apply text-slate-900 font-black text-xs uppercase tracking-widest mt-6 mb-2 flex items-center gap-2; }
+        .guide-section p { @apply text-slate-600 text-sm leading-relaxed mb-4; }
+        .bar-segment { @apply h-full transition-all duration-700; }
+        .irmaa-table { @apply w-full text-[10px] border-collapse mt-2 mb-4 font-bold; }
+        .irmaa-table td { @apply py-2 border-b border-slate-50 text-slate-600; }
     </style>
 </head>
 <body class="bg-[#F8FAFC] min-h-screen pb-96">
 
-    <div id="manualModal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md hidden flex items-center justify-center p-4 z-[9999]">
-        <div class="bg-white rounded-[2.5rem] w-full max-w-lg p-8 shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
-            <h2 class="text-2xl font-black text-slate-900 mb-2">Strategy Guide</h2>
-            <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mb-6">2026 Retirement Rules</p>
+    <div id="manualModal" class="closed fixed inset-0 bg-slate-900/95 backdrop-blur-2xl flex items-center justify-center p-4 z-[99999] transition-all duration-300">
+        <div class="bg-white rounded-[2.5rem] w-full max-w-lg p-8 shadow-2xl relative flex flex-col max-h-[85vh]">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-black text-slate-900">2026 Strategy Guide</h2>
+                <button onclick="closeManual()" class="bg-slate-100 p-2 rounded-full text-slate-400 font-bold">✕</button>
+            </div>
             
-            <div class="manual-text overflow-y-auto pr-2 custom-scrollbar">
+            <div class="guide-section overflow-y-auto pr-4">
                 <section>
-                    <h3>1. The 403b Advantage</h3>
-                    <p>Every dollar entered in <strong>403b Contrib</strong> is "hidden" from the tax man. It lowers your <strong>Federal Tax</strong>, your <strong>CA Tax</strong>, and most importantly, your <strong>MAGI</strong> (the number Medicare uses to set your premiums).</p>
+                    <h3>1. The 12% "Sweet Spot"</h3>
+                    <p>For 2026, the 12% Fed bracket for married seniors ends at roughly <strong>$100,800</strong> of taxable income. Beyond this, every dollar is taxed at 22%. Your goal is to fill this 12% bucket with 401k/RRSP withdrawals first.</p>
                 </section>
 
                 <section>
-                    <h3>2. Social Security "Tax Torpedo"</h3>
-                    <p>The IRS taxes up to <strong>85%</strong> of your Social Security if your other income is high. However, <strong>California (CA) taxes 0%</strong>. This is why you'll notice your Federal tax bill grow faster than your CA bill as you increase withdrawals.</p>
-                </section>
-
-                
-
-                <section>
-                    <h3>3. The 12% Bracket Goal</h3>
-                    <p>Your goal is to "fill" the 12% federal tax bracket. For a couple over 65, this usually means keeping your <strong>Federal Taxable Income</strong> (visible in your spreadsheet) under <strong>$100,800</strong>. Once you pass this, your tax rate jumps to 22%.</p>
+                    <h3>2. Medicare IRMAA Radar</h3>
+                    <p>Surcharges hit at <strong>$218,000</strong> MAGI. If you cross this by $1, you and your spouse will pay an extra <strong>~$1,950</strong> per year in premiums.</p>
+                    <table class="irmaa-table">
+                        <tr class="text-slate-400"><td>MAGI CLIFF</td><td>ANNUAL COST</td></tr>
+                        <tr><td>$218,000</td><td>+$1,950</td></tr>
+                        <tr><td>$274,000</td><td>+$4,870</td></tr>
+                    </table>
                 </section>
 
                 <section>
-                    <h3>4. IRMAA & The $218k Cliff</h3>
-                    <p>Medicare looks at your <strong>MAGI</strong> from two years ago. If you cross <strong>$218,000</strong> (for a couple), you hit the first surcharge cliff. This adds roughly <strong>$1,944/year</strong> in extra premiums. Use <strong>Roth/HSA</strong> withdrawals to stay under this line.</p>
-                </section>
-
-                
-
-                <section>
-                    <h3>5. The RRSP "Shadow" Growth</h3>
-                    <p>California is unique: they tax the internal interest/dividends inside a Canadian RRSP even if you don't withdraw it. Enter that growth in the <strong>RRSP Growth</strong> field to see the impact on your CA bill only.</p>
+                    <h3>3. The CA Social Security Shield</h3>
+                    <p>While the IRS taxes 85% of your benefits, <strong>California taxes 0%</strong>. The app automatically splits this logic to ensure your CA state tax stays accurate.</p>
                 </section>
             </div>
 
-            <button onclick="toggleManual()" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest mt-6 shadow-xl active:scale-95 transition-transform">
-                Got It, Let's Plan
-            </button>
+            <button onclick="closeManual()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black uppercase tracking-widest mt-8 shadow-xl">Back to Simulator</button>
         </div>
     </div>
 
-    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md border-b border-gray-100 z-50 px-6 py-4 flex justify-between items-center">
-        <div>
-            <h1 class="text-lg font-black text-slate-900 leading-none">Strategy Lab</h1>
-            <span class="text-[8px] font-bold text-blue-500 uppercase tracking-widest">v3.4 Expert Manual</span>
-        </div>
+    <nav class="bg-white border-b border-gray-100 px-6 py-6 flex justify-between items-center mb-4">
+        <div><h1 class="text-xl font-black text-slate-900">Strategy Lab</h1><span class="text-[9px] font-bold text-blue-600 uppercase tracking-widest">v5.7 Guide Integrated</span></div>
         <div class="flex gap-2">
-            <button onclick="toggleManual()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase shadow-sm">Help Manual</button>
-            <button onclick="resetInputs()" class="bg-slate-100 text-slate-500 px-4 py-2 rounded-lg text-[10px] font-black uppercase">Reset</button>
+            <button onclick="openManual()" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-[10px] font-black uppercase shadow-lg active:scale-95 transition-transform">Guide</button>
+            <button onclick="resetInputs()" class="bg-slate-100 text-slate-500 px-5 py-2 rounded-lg text-[10px] font-black uppercase">Reset</button>
         </div>
     </nav>
 
-    <div class="max-w-md mx-auto px-6 pt-24">
+    <div class="max-w-md mx-auto px-6">
         <div class="bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl text-white mb-8">
             <div class="flex justify-between items-center mb-6">
-                <div>
-                    <p class="text-[10px] font-black uppercase text-emerald-400 mb-1">IRMAA Status</p>
-                    <h3 id="irmaaBadge" class="text-xl font-extrabold tracking-tight text-emerald-400">SAFE</h3>
-                </div>
-                <div class="text-right">
-                    <p class="text-[10px] font-black uppercase text-rose-400 mb-1">Tax Bite</p>
-                    <h3 id="effRateTop" class="text-2xl font-extrabold">0%</h3>
-                </div>
+                <div><p class="text-[10px] font-black uppercase text-emerald-400 mb-1">IRMAA Status</p><h3 id="irmaaBadge" class="text-xl font-extrabold text-emerald-400">SAFE</h3></div>
+                <div class="text-right"><p class="text-[10px] font-black uppercase text-rose-400 mb-1">Tax Bite</p><h3 id="effRateTop" class="text-2xl font-extrabold">0%</h3></div>
             </div>
-            <div class="space-y-4 pt-4 border-t border-slate-800">
-                <div class="h-3 w-full bg-slate-800 rounded-full overflow-hidden flex">
-                    <div id="keepBar" class="bar-segment bg-emerald-400"></div>
-                    <div id="fedBar" class="bar-segment bg-rose-400"></div>
-                    <div id="caBar" class="bar-segment bg-rose-600"></div>
-                </div>
-                <div class="flex justify-between text-[9px] font-black text-slate-500 uppercase">
-                    <span>Keep: <span id="keepPct" class="text-emerald-400">0%</span></span>
-                    <span>Fed: <span id="fedPct" class="text-rose-400">0%</span></span>
-                    <span>CA: <span id="caPct" class="text-rose-600">0%</span></span>
-                </div>
-            </div>
+            <div class="h-3 w-full bg-slate-800 rounded-full overflow-hidden flex"><div id="keepBar" class="bar-segment bg-emerald-400"></div><div id="fedBar" class="bar-segment bg-rose-400"></div><div id="caBar" class="bar-segment bg-rose-600"></div></div>
         </div>
 
-        <div class="space-y-1">
-            <div class="input-card border-l-4 border-blue-500"><label>Wife Salary </label><input type="number" id="salary" value="125000" oninput="calculate()"></div>
-            <div class="input-card border-l-4 border-indigo-500"><label>403b Contrib </label><input type="number" id="contrib" value="25000" oninput="calculate()"></div>
-            <div class="input-card border-l-4 border-blue-300"><label>Social Security </label><input type="number" id="ss" value="43200" oninput="calculate()"></div>
-            <div class="input-card border-l-4 border-orange-400 mt-6"><label>401k / RRSP </label><input type="number" id="taxW" value="0" oninput="calculate()"></div>
-            <div class="input-card border-l-4 border-emerald-400"><label>Roth / HSA </label><input type="number" id="rothW" value="0" oninput="calculate()"></div>
-            <div class="input-card border-l-4 border-rose-500"><label>RRSP Growth (CA) </label><input type="number" id="rrspG" value="0" oninput="calculate()"></div>
+        <div class="space-y-1 mb-8">
+            <div class="input-card border-l-4 border-blue-500"><span class="input-label">Wife Salary</span><div class="input-wrapper"><input type="number" id="salary" value="125000" oninput="calculate()"></div></div>
+            <div class="input-card border-l-4 border-indigo-500"><span class="input-label">403b Contrib</span><div class="input-wrapper"><input type="number" id="contrib" value="25000" oninput="calculate()"></div></div>
+            <div class="input-card border-l-4 border-blue-300"><span class="input-label">Social Sec</span><div class="input-wrapper"><input type="number" id="ss" value="43200" oninput="calculate()"></div></div>
+            <div class="input-card border-l-4 border-orange-400 mt-6"><span class="input-label">401k / RRSP</span><div class="input-wrapper"><input type="number" id="taxW" value="0" oninput="calculate()"></div></div>
+            <div class="input-card border-l-4 border-emerald-400"><span class="input-label">Roth / HSA</span><div class="input-wrapper"><input type="number" id="rothW" value="0" oninput="calculate()"></div></div>
+            <div class="input-card border-l-4 border-rose-500"><span class="input-label">RRSP Growth</span><div class="input-wrapper"><input type="number" id="rrspG" value="0" oninput="calculate()"></div></div>
+        </div>
+
+        <div class="bg-blue-50 border border-blue-100 rounded-[2rem] p-6 mb-24">
+            <p class="text-[10px] font-black uppercase text-blue-400 mb-3 tracking-widest text-center">Plan Insights</p>
+            <p id="planText" class="text-sm text-slate-700 leading-relaxed font-medium text-center">Enter your details to generate a 2026 summary.</p>
         </div>
     </div>
 
     <div class="fixed bottom-6 left-6 right-6 max-w-md mx-auto z-40">
         <div class="bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl text-white">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <p class="text-[10px] font-black uppercase text-blue-400 mb-1">Net Take Home</p>
-                    <h3 id="netHome" class="text-3xl font-extrabold text-white">$0</h3>
-                </div>
-                <div class="text-right">
-                    <p class="text-[10px] font-black uppercase text-slate-400 mb-1">Current MAGI</p>
-                    <h3 id="magiDisplay" class="text-2xl font-extrabold text-white">$0</h3>
-                </div>
+            <div class="flex justify-between items-center mb-4">
+                <div><p class="text-[10px] font-black uppercase text-blue-400 mb-1">Net Take Home</p><h3 id="netHome" class="text-3xl font-black">$0</h3></div>
+                <div class="text-right"><p class="text-[10px] font-black uppercase text-slate-400 mb-1">MAGI (IRMAA)</p><h3 id="magiDisplay" class="text-2xl font-bold text-white">$0</h3></div>
             </div>
             <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800">
                 <div><p class="text-[10px] font-bold text-slate-500 uppercase">Gross Cash</p><p id="totalCash" class="font-bold text-slate-300 text-sm">$0</p></div>
-                <div class="text-right"><p class="text-[10px] font-bold text-slate-500 uppercase">Limit Gap</p><p id="irmaaGap" class="font-bold text-emerald-400 text-sm">$0</p></div>
+                <div class="text-right">
+                    <p class="text-[10px] font-black text-rose-500" id="irmaaImpactText">Surcharge: $0</p>
+                    <p class="text-[10px] font-black text-emerald-400" id="irmaaGapText">Gap: $218k</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Modal Logic
-        function toggleManual() { document.getElementById('manualModal').classList.toggle('hidden'); }
-
         const getV = (id) => parseFloat(document.getElementById(id).value) || 0;
-
         function calculate() {
             const sal = getV('salary'), con = getV('contrib'), ss = getV('ss'), taxW = getV('taxW'), rothW = getV('rothW'), rrspG = getV('rrspG');
             const salaryTaxable = Math.max(0, sal - con);
             const grossCash = salaryTaxable + ss + taxW + rothW;
             const magi = salaryTaxable + ss + taxW;
-            
-            const fedTax = calcTax(Math.max(0, (salaryTaxable + (ss * 0.85) + taxW) - 35500), [0, 24800, 100800, 211400, 403550], [0.1, 0.12, 0.22, 0.24, 0.32]);
+            const taxableIncome = Math.max(0, (salaryTaxable + (ss * 0.85) + taxW) - 35500);
+            const fedTax = calcTax(taxableIncome, [0, 24800, 100800, 211400, 403550], [0.1, 0.12, 0.22, 0.24, 0.32]);
             const caTax = Math.max(0, calcTax(Math.max(0, (salaryTaxable + taxW + rrspG) - 11412), [0, 22158, 52528, 82904, 115084], [0.01, 0.02, 0.04, 0.06, 0.08]) - 596);
             const totTax = fedTax + caTax;
-            const gap = 218000 - magi;
-
+            
             document.getElementById('totalCash').innerText = '$' + Math.round(grossCash).toLocaleString();
             document.getElementById('netHome').innerText = '$' + Math.round(grossCash - totTax).toLocaleString();
             document.getElementById('effRateTop').innerText = ((totTax / (grossCash || 1)) * 100).toFixed(1) + '%';
             document.getElementById('magiDisplay').innerText = '$' + Math.round(magi).toLocaleString();
-            document.getElementById('irmaaGap').innerText = gap > 0 ? '$' + Math.round(gap).toLocaleString() : 'EXCEEDED';
+            
+            let sur = 0; if (magi > 410000) sur = 7750; else if (magi > 342000) sur = 4870; else if (magi > 274000) sur = 2300; else if (magi > 218000) sur = 1950;
+            document.getElementById('irmaaImpactText').innerText = sur > 0 ? 'Surcharge: -$' + sur.toLocaleString() : 'No Surcharge';
+            document.getElementById('irmaaImpactText').className = sur > 0 ? "text-[10px] font-black text-rose-500" : "text-[10px] font-black text-slate-400";
+            document.getElementById('irmaaGapText').innerText = magi <= 218000 ? 'Gap: $' + Math.round(218000 - magi).toLocaleString() : 'EXCEEDED';
+            
+            let plan = taxableIncome > 100800 ? "Income is in the 22% Federal bracket. " : "Income is in the 12% Federal bracket. ";
+            plan += magi <= 218000 ? `You have <strong>$${Math.round(218000 - magi).toLocaleString()}</strong> left before the IRMAA cliff.` : `Switch to Roth/HSA to lower MAGI and remove the surcharge.`;
+            document.getElementById('planText').innerHTML = plan;
 
             const fp = (fedTax / (grossCash || 1)) * 100, cp = (caTax / (grossCash || 1)) * 100;
-            document.getElementById('fedBar').style.width = fp + '%';
-            document.getElementById('caBar').style.width = cp + '%';
-            document.getElementById('keepBar').style.width = Math.max(0, 100-fp-cp) + '%';
-            document.getElementById('fedPct').innerText = fp.toFixed(1) + '%';
-            document.getElementById('caPct').innerText = cp.toFixed(1) + '%';
-            document.getElementById('keepPct').innerText = Math.max(0, 100-fp-cp).toFixed(1) + '%';
-
-            const b = document.getElementById('irmaaBadge');
-            if (magi <= 218000) { b.innerText = "SAFE"; b.className = "text-xl font-extrabold tracking-tight text-emerald-400"; }
-            else { b.innerText = "SURCHARGE"; b.className = "text-xl font-extrabold tracking-tight text-rose-500"; }
+            document.getElementById('fedBar').style.width = fp + '%', document.getElementById('caBar').style.width = cp + '%', document.getElementById('keepBar').style.width = Math.max(0, 100-fp-cp) + '%';
+            document.getElementById('irmaaBadge').innerText = magi <= 218000 ? "SAFE" : "ALERT";
+            document.getElementById('irmaaBadge').className = magi <= 218000 ? "text-xl font-extrabold text-emerald-400" : "text-xl font-extrabold text-rose-500";
         }
-
-        function calcTax(tax, brackets, rates) {
-            let res = 0;
-            for (let i = brackets.length - 1; i >= 0; i--) {
-                if (tax > brackets[i]) res += (tax - brackets[i]) * (rates[i] - (rates[i-1] || 0));
-            }
-            return res;
-        }
-
-        function resetInputs() {
-            ['salary','contrib','ss','taxW','rothW','rrspG'].forEach(id => document.getElementById(id).value = id === 'salary' ? 125000 : id === 'contrib' ? 25000 : id === 'ss' ? 43200 : 0);
-            calculate();
-        }
+        function calcTax(tax, brackets, rates) { let res = 0; for (let i = brackets.length - 1; i >= 0; i--) { if (tax > brackets[i]) res += (tax - brackets[i]) * (rates[i] - (rates[i-1] || 0)); } return res; }
+        function openManual() { document.getElementById('manualModal').className = 'open fixed inset-0 bg-slate-900/95 backdrop-blur-2xl flex items-center justify-center p-4 z-[99999] transition-all duration-300'; }
+        function closeManual() { document.getElementById('manualModal').className = 'closed fixed inset-0 bg-slate-900/95 backdrop-blur-2xl flex items-center justify-center p-4 z-[99999] transition-all duration-300'; }
+        function resetInputs() { ['salary','contrib','ss','taxW','rothW','rrspG'].forEach(id => document.getElementById(id).value = id === 'salary' ? 125000 : id === 'contrib' ? 25000 : id === 'ss' ? 43200 : 0); calculate(); }
         window.onload = calculate;
     </script>
 </body>
