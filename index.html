@@ -3,117 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Strategy Lab v7.3</title>
+    <title>Strategy Lab v12.4</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #F8FAFC; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #FFFFFF !important; color: #000000 !important; font-family: sans-serif; -webkit-tap-highlight-color: transparent; padding: 20px; }
+        .section-box { border: 4px solid #000000; padding: 20px; margin-bottom: 20px; border-radius: 15px; background: #FFFFFF !important; }
+        .label-bold { font-weight: 900; text-transform: uppercase; font-size: 14px; color: #000000 !important; display: block; margin-bottom: 5px; }
+        .value-large { font-weight: 900; font-size: 45px; color: #000000 !important; line-height: 1; display: block; }
+        .bar-outer { height: 45px; width: 100%; background: #EEEEEE; border: 4px solid #000000; border-radius: 10px; overflow: hidden; display: flex; margin: 15px 0; }
+        .bar-fill { height: 100%; transition: width 0.5s ease-in-out; }
+        .bg-keep { background-color: #10B981 !important; } 
+        .bg-fed { background-color: #F59E0B !important; }  
+        .bg-ca { background-color: #A855F7 !important; }   
+        .input-group { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #EEEEEE; padding: 15px 0; }
+        input { text-align: right; font-weight: 900; font-size: 30px; border: 2px solid #000000; border-radius: 10px; width: 160px; padding: 5px 10px; color: #000000 !important; background: #FFFFFF !important; -webkit-text-fill-color: #000000 !important; }
         
-        /* NUCLEAR CONTRAST DASHBOARD */
-        .glass-card {
-            background: #010413; /* Darker black-blue for maximum text pop */
-            @apply rounded-[2.5rem] p-8 text-white relative overflow-hidden border-2 border-white/20 shadow-2xl;
-        }
-
-        /* HIGH VISIBILITY LABELS */
-        .dashboard-label { @apply text-[11px] font-black uppercase tracking-[0.2em] mb-1 text-sky-400; }
-        .irmaa-label-glow { @apply text-[11px] font-black uppercase tracking-[0.2em] mb-1 text-[#10B981]; } /* Emerald Label */
-        
-        .value-main { @apply text-5xl font-extrabold tracking-tighter leading-none; }
-        .keep-value-glow { 
-            text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); 
-            @apply text-5xl font-extrabold tracking-tighter leading-none text-white; 
-        }
-
-        /* INPUT PILLAR */
-        .input-row { @apply flex items-center justify-between bg-white mb-3 px-6 py-5 rounded-[2rem] shadow-sm border border-slate-200; }
-        .label-text { font-family: 'JetBrains Mono', monospace; @apply text-[10px] font-bold uppercase tracking-widest text-slate-500; }
-        .input-box { width: 140px; @apply flex items-center justify-end; }
-        input { @apply text-right text-2xl font-black text-slate-900 bg-transparent outline-none w-full; font-feature-settings: "tnum"; }
-        
-        #manualModal { display: none; }
-        .bar-segment { @apply h-full transition-all duration-700 ease-in-out; min-width: 0px; }
+        /* THE COMPREHENSIVE MANUAL OVERLAY */
+        #manualModal { display: none; position: fixed; inset: 0; background: white; z-index: 9999; padding: 30px; overflow-y: auto; border-top: 15px solid #000000; }
+        .manual-h2 { font-size: 32px; font-weight: 900; border-bottom: 6px solid black; padding-bottom: 10px; margin-bottom: 20px; }
+        .manual-h3 { font-weight: 900; text-transform: uppercase; font-size: 18px; margin: 30px 0 10px 0; color: #0284C7; }
+        .manual-p { font-size: 16px; line-height: 1.6; margin-bottom: 15px; color: #334155; }
+        .manual-list { list-style: disc; padding-left: 20px; margin-bottom: 20px; }
+        .manual-list li { margin-bottom: 8px; font-size: 15px; }
     </style>
 </head>
 <body class="pb-96">
 
-    <div id="manualModal" class="fixed inset-0 z-[5000] flex items-end">
-        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-md" onclick="closeManual()"></div>
-        <div class="bg-white w-full rounded-t-[3rem] p-10 relative z-10 shadow-2xl max-h-[85vh] overflow-y-auto">
-            <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-8"></div>
-            <h2 class="text-3xl font-black text-slate-900 mb-6 text-center">2026 Strategy Guide</h2>
-            <div class="space-y-6 text-slate-600 text-sm leading-relaxed pb-10">
-                <section>
-                    <h3 class="font-black text-xs uppercase tracking-widest text-slate-900 mb-2">The 12% Goal</h3>
-                    <p>Withdraw from 401k/RRSP until taxable income hits <strong>$100,800</strong>. This is your peak efficiency zone.</p>
-                </section>
-                <button onclick="closeManual()" class="w-full bg-slate-900 text-white py-5 rounded-[2rem] font-bold text-lg mt-4 shadow-xl">Got It</button>
-            </div>
+    <div id="manualModal">
+        <h2 class="manual-h2">STRATEGIC ACTION PLAN (2026)</h2>
+        
+        <div class="manual-h3">1. The Triple Bucket Strategy</div>
+        <p class="manual-p">To maximize your net income, you must draw from your three "buckets" in a specific order of priority:</p>
+        <ul class="manual-list">
+            <li><strong>Bucket 1 (401k / RRSP):</strong> Ordinary Income. Use this to fill your 12% Fed bracket. For 2026, stay under <strong>$100,800</strong> of taxable income to avoid the 22% jump.</li>
+            <li><strong>Bucket 2 (Brokerage / Index):</strong> Capital Gains. These are taxed more lightly. Use this to "bridge the gap" for extra spending without pushing into high tax brackets.</li>
+            <li><strong>Bucket 3 (Roth / HSA):</strong> 100% Tax-Free. This is your "Safety Valve." Use it for extra cash when you are already at the IRMAA limit.</li>
+        </ul>
+        
+
+        <div class="manual-h3">2. The 2026 IRMAA Cliffs</div>
+        <p class="manual-p">Medicare Part B and D premiums are based on your <strong>Modified Adjusted Gross Income (MAGI)</strong> from two years prior. Crossing a "cliff" by $1 triggers the full surcharge:</p>
+        <ul class="manual-list">
+            <li><strong>Safe Zone:</strong> Under $218,000 (Joint).</li>
+            <li><strong>Tier 1 Surcharge:</strong> $218,000 - $274,000 (Adds ~$2,300/year for a couple).</li>
+            <li><strong>Tier 2 Surcharge:</strong> $274,000 - $342,000 (Adds ~$5,770/year for a couple).</li>
+        </ul>
+        
+
+        <div class="manual-h3">3. The California Social Security Shield</div>
+        <p class="manual-p">While the Federal government taxes up to 85% of your Social Security benefits, <strong>California is one of the states that taxes 0%</strong>. This app is custom-programmed to shield your SS benefits from CA state tax calculations automatically.</p>
+
+        <div class="manual-h3">4. How to use the "Bucket Fill"</div>
+        <p class="manual-p">Watch the bottom-right tracker. If it says <strong>"22% BUCKET FILL"</strong>, you have likely over-drawn from your 401k. Switch some of that withdrawal to the <strong>Roth/HSA</strong> field until you move back into the 12% zone.</p>
+        
+
+        <button onclick="toggleManual(false)" style="width: 100%; background: black; color: white; padding: 25px; font-weight: 900; font-size: 20px; margin-top: 40px; border-radius: 15px;">RETURN TO SIMULATOR</button>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1 style="font-weight: 900; font-size: 26px;">STRATEGY LAB <span style="font-size: 11px; display: block; color: #64748b;">v12.4 MASTER EDITION</span></h1>
+        <button onclick="toggleManual(true)" style="width: 55px; height: 55px; background: black; color: white; border-radius: 12px; font-weight: 900; font-size: 26px; border: 4px solid #EEEEEE;">?</button>
+    </div>
+
+    <div class="section-box">
+        <div style="display: flex; justify-content: space-between;">
+            <div><span class="label-bold">IRMAA STATUS</span><span id="irmaaBadge" class="value-large">SAFE</span></div>
+            <div style="text-align: right;"><span class="label-bold">KEEP %</span><span id="effRateTop" class="value-large">100%</span></div>
+        </div>
+
+        <div class="bar-outer">
+            <div id="keepBar" class="bar-fill bg-keep" style="width: 100%;"></div>
+            <div id="fedBar" class="bar-fill bg-fed" style="width: 0%;"></div>
+            <div id="caBar" class="bar-fill bg-ca" style="width: 0%;"></div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; font-weight: 900; font-size: 14px;">
+            <span style="color: #F59E0B;">FED: <span id="fedTaxLabel">$0</span></span>
+            <span style="color: #A855F7;">CA: <span id="caTaxLabel">$0</span></span>
+            <span style="color: #0284C7;">MAGI: <span id="magiLabel">$0</span></span>
         </div>
     </div>
 
-    <nav class="px-8 pt-12 pb-6 flex justify-between items-center">
-        <div><h1 class="text-2xl font-black text-slate-900 tracking-tight">Strategy Lab</h1><p class="text-[10px] font-black text-blue-600 uppercase tracking-widest">v7.3 High Contrast</p></div>
-        <button onclick="openManual()" class="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-slate-900 font-bold text-xl border-2 border-slate-200">?</button>
-    </nav>
+    <div class="section-box">
+        <div class="input-group"><span class="label-bold">Wife Salary</span><input type="number" id="salary" value="125000" oninput="calculate()"></div>
+        <div class="input-group"><span class="label-bold">403b Contrib</span><input type="number" id="contrib" value="25000" oninput="calculate()"></div>
+        <div class="input-group"><span class="label-bold">Soc Security</span><input type="number" id="ss" value="43200" oninput="calculate()"></div>
+        <div style="height: 12px; background: #f1f5f9; margin: 15px 0; border-radius: 4px;"></div>
+        <div class="input-group"><span class="label-bold" style="color: #F59E0B;">401k Withdrawal</span><input type="number" id="taxW" value="0" oninput="calculate()"></div>
+        <div class="input-group"><span class="label-bold" style="color: #0284C7;">Brokerage/Gain</span><input type="number" id="invW" value="0" oninput="calculate()"></div>
+        <div class="input-group"><span class="label-bold" style="color: #10B981;">Roth Withdrawal</span><input type="number" id="rothW" value="0" oninput="calculate()"></div>
+    </div>
 
-    <main class="px-6">
-        <div class="glass-card mb-10">
-            <div class="flex justify-between items-start mb-10">
-                <div>
-                    <p id="irmaaLabel" class="irmaa-label-glow">IRMAA Status</p>
-                    <h3 id="irmaaBadge" class="value-main text-[#10B981]">Safe</h3>
-                </div>
-                <div class="text-right">
-                    <p class="dashboard-label text-sky-400">Keep %</p>
-                    <h3 id="effRateTop" class="keep-value-glow">100%</h3>
-                </div>
-            </div>
-            
-            <div class="h-6 w-full bg-slate-900 rounded-full overflow-hidden flex ring-2 ring-white/30 mb-6 shadow-inner">
-                <div id="keepBar" class="bar-segment bg-[#10B981]" style="width: 100%;"></div>
-                <div id="fedBar" class="bar-segment bg-[#F59E0B]" style="width: 0%;"></div>
-                <div id="caBar" class="bar-segment bg-[#A855F7]" style="width: 0%;"></div>
-            </div>
-            
-            <div class="flex justify-between text-[10px] font-black uppercase tracking-widest text-white">
-                <div>IRS: <span id="fedTaxLabel" class="text-[#F59E0B]">$0</span></div>
-                <div>CA: <span id="caTaxLabel" class="text-[#A855F7]">$0</span></div>
-                <div>Keep: <span id="keepLabel" class="text-[#10B981]">$0</span></div>
+    <div id="footerPanel" class="section-box" style="position: fixed; bottom: 0; left: 0; right: 0; margin-bottom: 0; border-radius: 0; border-top: 8px solid black; box-shadow: 0 -10px 40px rgba(0,0,0,0.2);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div><span class="label-bold">MONTHLY NET</span><span id="netHome" class="value-large">$0</span></div>
+            <div style="text-align: right;">
+                <p style="font-weight: 900; color: #ef4444; font-size: 12px;">IRMAA: <span id="irmaaImpactText">$0</span></p>
+                <p style="font-weight: 900; color: #10B981; font-size: 12px;">IRMAA GAP: <span id="irmaaGapText">$218k</span></p>
             </div>
         </div>
-
-        <div class="space-y-1">
-            <div class="input-row"><span class="label-text">Wife's Salary</span><div class="input-box"><input type="number" id="salary" value="125000" oninput="calculate()"></div></div>
-            <div class="input-row"><span class="label-text">403b Contrib</span><div class="input-box"><input type="number" id="contrib" value="25000" oninput="calculate()"></div></div>
-            <div class="input-row"><span class="label-text text-sky-500">Social Security</span><div class="input-box"><input type="number" id="ss" value="43200" oninput="calculate()"></div></div>
-            <div class="h-4"></div>
-            <div class="input-row border-r-4 border-amber-500"><span class="label-text text-amber-600">401k / RRSP</span><div class="input-box"><input type="number" id="taxW" value="0" oninput="calculate()"></div></div>
-            <div class="input-row border-r-4 border-blue-400"><span class="label-text text-blue-500">Brokerage / Index</span><div class="input-box"><input type="number" id="invW" value="0" oninput="calculate()"></div></div>
-            <div class="input-row border-r-4 border-emerald-500"><span class="label-text text-emerald-600">Roth / HSA</span><div class="input-box"><input type="number" id="rothW" value="0" oninput="calculate()"></div></div>
-        </div>
-    </main>
-
-    <div class="fixed bottom-8 left-6 right-6 z-[100]">
-        <div class="glass-card p-8 border-2 border-white/20">
-            <div class="flex justify-between items-center mb-6">
-                <div><p class="dashboard-label text-sky-400">Monthly Net</p><h3 id="netHome" class="text-4xl font-black text-white leading-none">$0</h3></div>
-                <div class="text-right">
-                    <p class="text-[10px] font-black text-rose-500" id="irmaaImpactText">Surcharge: $0</p>
-                    <p class="text-[10px] font-black text-[#10B981]" id="irmaaGapText">Gap: $218k</p>
-                </div>
-            </div>
-            <div class="flex justify-between pt-6 border-t border-white/10 gap-2">
-                <div class="text-center flex-1"><p class="text-[9px] font-bold text-slate-500 uppercase">Bracket</p><p id="currentBracketDisplay" class="font-black text-white text-sm">10%</p></div>
-                <div class="text-center flex-1"><p id="bracketNextLabel" class="text-[9px] font-bold text-slate-500 uppercase">Gap to 12%</p><p id="bracketGap" class="font-black text-[#F59E0B] text-sm">$0</p></div>
-            </div>
+        <div style="display: flex; justify-content: space-between; text-align: center; border-top: 3px solid #000; padding-top: 15px;">
+            <div style="flex: 1;"><p id="bracketHeader" class="label-bold" style="font-size: 10px;">12% BUCKET FILL</p><p id="bracketFill" style="font-weight: 900; font-size: 22px;">$0</p></div>
+            <div style="flex: 1; border-left: 2px solid #EEE;"><p class="label-bold" style="font-size: 10px;">GAP TO NEXT</p><p id="bracketGap" style="font-weight: 900; font-size: 22px;">$0</p></div>
         </div>
     </div>
 
     <script>
         const getV = (id) => {
             const el = document.getElementById(id);
-            if (!el) return 0;
             const val = parseFloat(el.value);
             return isNaN(val) ? 0 : val;
         };
@@ -126,55 +123,43 @@
             const magi = taxableSalary + ss + taxW + taxableInv;
             const fedTaxableIncome = Math.max(0, (taxableSalary + (ss * 0.85) + taxW + taxableInv) - fedStdDed);
 
-            const fedTax = calcTax(fedTaxableIncome, [0, 24800, 100800, 211400, 403550], [0.1, 0.12, 0.22, 0.24, 0.32]);
+            const tiers = [0, 24800, 100800, 211400, 403550];
+            const rates = ["10%", "12%", "22%", "24%", "32%"];
+            let idx = 0;
+            for(let i=0; i<tiers.length; i++) { if(fedTaxableIncome >= tiers[i]) idx = i; }
+
+            const fedTax = calcTax(fedTaxableIncome, tiers, [0.1, 0.12, 0.22, 0.24, 0.32]);
             const caTax = calcTax(Math.max(0, (taxableSalary + taxW + taxableInv) - 11412), [0, 22158, 52528, 82904, 115084], [0.01, 0.02, 0.04, 0.06, 0.08]);
 
             const grossCash = taxableSalary + ss + taxW + rothW + invW;
-            const totalTax = fedTax + caTax;
-            const keepAmt = Math.max(0, grossCash - totalTax);
+            const keepAmt = Math.max(0, grossCash - (fedTax + caTax));
             const keepPct = grossCash > 0 ? (keepAmt / grossCash * 100) : 100;
 
             document.getElementById('fedTaxLabel').innerText = '$' + Math.round(fedTax).toLocaleString();
             document.getElementById('caTaxLabel').innerText = '$' + Math.round(caTax).toLocaleString();
-            document.getElementById('keepLabel').innerText = '$' + Math.round(keepAmt).toLocaleString();
-            document.getElementById('effRateTop').innerText = Math.round(keepPct) + '%';
+            document.getElementById('magiLabel').innerText = '$' + Math.round(magi).toLocaleString();
             document.getElementById('netHome').innerText = '$' + Math.round(keepAmt / 12).toLocaleString();
+            document.getElementById('effRateTop').innerText = Math.round(keepPct) + '%';
             
             document.getElementById('keepBar').style.width = keepPct + '%';
             document.getElementById('fedBar').style.width = (grossCash > 0 ? (fedTax/grossCash*100) : 0) + '%';
             document.getElementById('caBar').style.width = (grossCash > 0 ? (caTax/grossCash*100) : 0) + '%';
 
-            const tiers = [0, 24800, 100800, 211400, 403550];
-            const rates = ["10%", "12%", "22%", "24%", "32%"];
-            let idx = 0;
-            for(let i=0; i<tiers.length; i++) { if(fedTaxableIncome >= tiers[i]) idx = i; }
-            document.getElementById('currentBracketDisplay').innerText = rates[idx];
-            if(idx < tiers.length - 1) {
-                document.getElementById('bracketNextLabel').innerText = "Gap to " + rates[idx+1];
-                document.getElementById('bracketGap').innerText = "$" + Math.round(tiers[idx+1] - fedTaxableIncome).toLocaleString();
-            }
+            document.getElementById('bracketHeader').innerText = rates[idx] + " BUCKET FILL";
+            document.getElementById('bracketFill').innerText = "$" + Math.round(fedTaxableIncome - (tiers[idx] || 0)).toLocaleString();
+            document.getElementById('bracketGap').innerText = idx < tiers.length - 1 ? "$" + Math.round(tiers[idx+1] - fedTaxableIncome).toLocaleString() : "MAX";
+            document.getElementById('footerPanel').style.backgroundColor = idx >= 2 ? "#fff9c4" : "white";
 
-            let sur = 0; if (magi > 218000) sur = 2300; if (magi > 274000) sur = 5770;
-            document.getElementById('irmaaImpactText').innerText = 'Surcharge: $' + sur.toLocaleString();
-            document.getElementById('irmaaGapText').innerText = magi <= 218000 ? 'Gap: $' + Math.round(218000 - magi).toLocaleString() : 'CLIFF HIT';
-            
-            const badge = document.getElementById('irmaaBadge');
-            const label = document.getElementById('irmaaLabel');
-            badge.innerText = magi <= 218000 ? "Safe" : "Alert";
-            badge.className = magi <= 218000 ? "value-main text-[#10B981]" : "value-main text-rose-500";
-            label.className = magi <= 218000 ? "irmaa-label-glow" : "dashboard-label text-rose-400";
+            document.getElementById('irmaaBadge').innerText = magi <= 218000 ? "SAFE" : "ALERT";
+            document.getElementById('irmaaBadge').style.color = magi <= 218000 ? "green" : "red";
+            document.getElementById('irmaaImpactText').innerText = '$' + (magi > 218000 ? (magi > 274000 ? 5770 : 2300) : 0).toLocaleString();
+            document.getElementById('irmaaGapText').innerText = magi <= 218000 ? '$' + Math.round(218000 - magi).toLocaleString() : 'CLIFF HIT';
         }
 
         function calcTax(tax, brackets, rates) {
-            let res = 0;
-            for (let i = brackets.length - 1; i >= 0; i--) {
-                if (tax > brackets[i]) res += (tax - brackets[i]) * (rates[i] - (rates[i-1] || 0));
-            }
-            return res;
+            let res = 0; for (let i = brackets.length - 1; i >= 0; i--) { if (tax > brackets[i]) res += (tax - brackets[i]) * (rates[i] - (rates[i-1] || 0)); } return res;
         }
-
-        function openManual() { document.getElementById('manualModal').style.display = 'flex'; }
-        function closeManual() { document.getElementById('manualModal').style.display = 'none'; }
+        function toggleManual(show) { document.getElementById('manualModal').style.display = show ? 'block' : 'none'; }
         window.onload = calculate;
     </script>
 </body>
