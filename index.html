@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Strategy Lab v13.6</title>
+    <title>Strategy Lab v13.7</title>
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,10 +12,17 @@
         :root { --bg: #F8FAFC; --card: #FFFFFF; --text: #0F172A; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        .app-wrapper { max-width: 600px; margin: 0 auto; min-height: 100vh; @apply px-6 pb-96 pt-8; }
+        /* THE WRAPPER: Added huge bottom padding so inputs can scroll above the footer */
+        .app-wrapper { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            min-height: 100vh; 
+            padding-bottom: 450px !important; 
+            @apply px-6 pt-8; 
+        }
+
         .f-card { background: var(--card); @apply rounded-[2.5rem] p-10 shadow-xl shadow-slate-200/60 mb-8 border border-slate-100; }
 
-        /* THE NUCLEAR VISIBILITY BAR */
         .bar-container { 
             height: 48px !important; 
             width: 100%; 
@@ -31,19 +38,17 @@
         .label-style { @apply text-[12px] font-extrabold uppercase tracking-widest text-slate-400 block mb-6; }
         .value-hero { @apply text-5xl font-[800] tracking-tighter text-slate-900 leading-none block; }
 
-        /* INPUTS */
         .input-row { @apply flex items-center bg-white px-8 py-6 rounded-3xl border border-slate-200 mb-4 shadow-sm; }
         .input-label { @apply text-[11px] font-bold uppercase text-slate-500 tracking-wider flex-shrink-0; }
         .spacer { @apply flex-grow; }
         input { @apply text-right text-3xl font-[800] text-black bg-transparent outline-none w-48; font-feature-settings: "tnum"; -webkit-text-fill-color: #000000; }
 
-        .sticky-footer { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); width: calc(100% - 3rem); max-width: 550px; z-index: 500; }
+        /* FOOTER POSITION */
+        .sticky-footer { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); width: calc(100% - 2.5rem); max-width: 550px; z-index: 500; }
         
-        /* MANUAL OVERLAY STYLING */
         #manualModal { display: none; }
         .manual-h3 { @apply text-blue-600 font-[800] uppercase text-xs tracking-widest mt-8 mb-4 border-b border-slate-100 pb-2; }
         .manual-p { @apply text-slate-600 text-sm leading-relaxed mb-4; }
-        .manual-list { @apply list-disc pl-5 mb-6 text-slate-600 text-sm space-y-2; }
     </style>
 </head>
 <body>
@@ -52,41 +57,28 @@
         <div id="manualModal" class="fixed inset-0 z-[9999] flex items-end">
             <div class="absolute inset-0 bg-slate-900/85 backdrop-blur-sm" onclick="toggleManual(false)"></div>
             <div class="bg-white w-full rounded-t-[3.5rem] p-12 relative z-10 shadow-2xl max-h-[90vh] overflow-y-auto border-t-8 border-blue-600">
-                <div class="w-16 h-1.5 bg-slate-200 rounded-full mx-auto mb-10"></div>
                 <h2 class="text-3xl font-[900] text-slate-900 mb-6 text-center">Master Strategy Guide</h2>
-                
                 <div class="pb-24">
                     <h3 class="manual-h3">1. The Triple Bucket Strategy</h3>
                     <p class="manual-p">Coordinate your withdrawals to maximize net "Efficiency":</p>
-                    <ul class="manual-list">
-                        <li><strong>Ordinary Bucket (401k/RRSP):</strong> Taxed as regular income. Your primary goal is to fill the 12% Fed bracket (up to <strong>$100,800</strong> taxable income) but not exceed it.</li>
-                        <li><strong>Capital Gains Bucket (Brokerage):</strong> Perfect for "bridging" cash needs. Only 40% of the gain is typically factored into the tax logic here.</li>
-                        <li><strong>Tax-Free Bucket (Roth/HSA):</strong> 100% tax-free. Use this as your "shield" when you are close to hitting a tax bracket jump or an IRMAA cliff.</li>
+                    <ul class="list-disc pl-5 mb-6 text-slate-600 text-sm space-y-2">
+                        <li><strong>Ordinary (401k):</strong> Fill the 12% Fed bracket (up to $100,800 taxable).</li>
+                        <li><strong>Capital Gains (Brokerage):</strong> High efficiency for extra spending.</li>
+                        <li><strong>Tax-Free (Roth):</strong> Shield against IRMAA cliffs.</li>
                     </ul>
                     
-
                     <h3 class="manual-h3">2. 2026 IRMAA Cliffs</h3>
-                    <p class="manual-p">Medicare premiums are triggered by your MAGI. Crossing a threshold by even $1 costs you the full surcharge:</p>
-                    <ul class="manual-list">
-                        <li><strong>Tier 1 Limit:</strong> $218,000 (Married Joint).</li>
-                        <li><strong>Impact:</strong> Crossing this adds ~$2,300/year to your premiums.</li>
-                    </ul>
+                    <p class="manual-p">Stay under $218,000 (Joint) to avoid the annual surcharge. Crossing this adds ~$2,300/year to your premiums.</p>
                     
-
                     <h3 class="manual-h3">3. California Tax Shield</h3>
-                    <p class="manual-p">Feds tax up to 85% of Social Security, but <strong>California taxes 0%</strong>. This app is custom-coded to exclude SS from your CA state tax calculation automatically.</p>
-
-                    <h3 class="manual-h3">4. How to Use "Efficiency"</h3>
-                    <p class="manual-p">Your <strong>Efficiency Score</strong> is the percentage of your gross withdrawal that stays in your pocket. If this score drops sharply, you have likely crossed into the 22% bracket or hit an IRMAA cliff. Adjust your 401k vs. Roth mix to recover efficiency.</p>
-                    
-
+                    <p class="manual-p">California taxes 0% of Social Security. This app excludes SS from CA calculations automatically.</p>
                     <button onclick="toggleManual(false)" class="w-full bg-slate-900 text-white py-6 rounded-3xl font-bold text-lg uppercase shadow-lg mt-8">Close Guide</button>
                 </div>
             </div>
         </div>
 
         <nav class="px-8 pb-10 flex justify-between items-center">
-            <div><h1 class="text-2xl font-[800] text-slate-900 tracking-tight">Strategy Lab</h1><p class="text-[10px] font-bold text-blue-500 uppercase tracking-widest">v13.6 Master Manual</p></div>
+            <div><h1 class="text-2xl font-[800] text-slate-900 tracking-tight">Strategy Lab</h1><p class="text-[10px] font-bold text-blue-500 uppercase tracking-widest">v13.7 Accessible Scroll</p></div>
             <button onclick="toggleManual(true)" class="w-14 h-14 bg-white text-slate-900 rounded-2xl flex items-center justify-center font-bold text-xl shadow-md border border-slate-100">?</button>
         </nav>
 
@@ -166,7 +158,6 @@
             const totalTax = fedTax + caTax;
             const keepAmt = Math.max(0, grossCash - totalTax);
             
-            // MATH FOR BAR SEGMENTS
             let keepPct = grossCash > 0 ? (keepAmt / grossCash * 100) : 100;
             let fedPct = grossCash > 0 ? (fedTax / grossCash * 100) : 0;
             let caPct = grossCash > 0 ? (caTax / grossCash * 100) : 0;
@@ -183,7 +174,7 @@
             document.getElementById('caTaxLabel').innerText = '$' + Math.round(caTax).toLocaleString();
             document.getElementById('magiLabel').innerText = '$' + Math.round(magi).toLocaleString();
             document.getElementById('netHome').innerText = '$' + Math.round(keepAmt / 12).toLocaleString();
-            document.getElementById('effRateTop').innerText = Math.round(grossCash > 0 ? (keepAmt/grossCash*100) : 100) + '%';
+            document.getElementById('effRateTop').innerText = Math.round(keepAmt/grossCash*100 || 100) + '%';
             
             const tiers = [0, 24800, 100800, 211400, 403550];
             const rates = ["10%", "12%", "22%", "24%", "32%"];
