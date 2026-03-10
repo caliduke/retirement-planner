@@ -3,76 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Strategy Lab</title>
+    <title>Strategy Lab v3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .input-card { @apply bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-4; }
+        .input-card { @apply bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-4 transition-all; }
+        .input-card:focus-within { @apply ring-2 ring-blue-500 border-transparent; }
         input { @apply w-full text-xl font-semibold text-gray-800 bg-transparent outline-none; }
         label { @apply block text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-1; }
-        /* High Z-Index for Modal */
-        #manualModal { z-index: 9999; }
         .bar-segment { @apply h-full transition-all duration-700 ease-out; }
+        #manualModal { z-index: 9999; }
     </style>
 </head>
 <body class="bg-[#F8FAFC] min-h-screen pb-80">
 
-    <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-100 z-50 px-6 py-4 flex justify-between items-center">
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md border-b border-gray-100 z-50 px-6 py-4 flex justify-between items-center">
         <div>
-            <h1 class="text-lg font-black text-slate-900">Strategy Lab</h1>
+            <h1 class="text-lg font-black text-slate-900 leading-none">Strategy Lab</h1>
+            <span class="text-[8px] font-bold text-blue-500 uppercase tracking-widest">v3.0 Live</span>
         </div>
-        <div class="flex gap-3">
-            <button onclick="toggleManual()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-tight shadow-md active:scale-95">
-                Help Manual
-            </button>
-            <button onclick="saveScenario()" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-bold uppercase active:scale-95">
-                Save
-            </button>
+        <div class="flex gap-2">
+            <button onclick="toggleManual()" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-[10px] font-black uppercase">Help</button>
+            <button onclick="saveScenario()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-[10px] font-black uppercase">Save</button>
+            <button onclick="resetInputs()" class="bg-slate-100 text-slate-500 px-3 py-2 rounded-lg text-[10px] font-black uppercase">Reset</button>
         </div>
     </nav>
 
-    <div id="manualModal" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md hidden flex items-center justify-center p-6">
-        <div class="bg-white rounded-[2rem] w-full max-w-sm p-8 shadow-2xl overflow-hidden relative">
+    <div id="manualModal" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md hidden flex items-center justify-center p-6">
+        <div class="bg-white rounded-[2rem] w-full max-w-sm p-8 shadow-2xl relative">
             <h2 class="text-2xl font-black text-slate-900 mb-6 text-center">User Manual</h2>
-            
-            <div class="space-y-6 text-slate-600 text-sm leading-relaxed overflow-y-auto max-h-[60vh]">
-                <section>
-                    <h3 class="font-bold text-blue-600 uppercase text-[10px] mb-1">Income & 403b</h3>
-                    <p>The <strong>403b Contribution</strong> field automatically reduces your taxable income for Fed, CA, and IRMAA math.</p>
-                </section>
-                <section>
-                    <h3 class="font-bold text-orange-600 uppercase text-[10px] mb-1">Withdrawal Strategy</h3>
-                    <p>Use <strong>401k</strong> to fill your 12% bracket. Use <strong>Roth</strong> for everything else to keep taxes low.</p>
-                </section>
-                <section>
-                    <h3 class="font-bold text-rose-600 uppercase text-[10px] mb-1">IRMAA Cliff</h3>
-                    <p>Keep your MAGI under <strong>$218,000</strong> to avoid the Medicare surcharge "Torpedos."</p>
-                </section>
+            <div class="space-y-4 text-slate-600 text-sm leading-relaxed overflow-y-auto max-h-[50vh]">
+                <p><strong>403b:</strong> Automatically reduces taxable income for Fed, CA, and IRMAA.</p>
+                <p><strong>401k/RRSP:</strong> Increases Federal/CA tax. Fill the 12% bracket here first.</p>
+                <p><strong>Roth/HSA:</strong> No tax impact. Use these for extra cash needs.</p>
+                <p><strong>IRMAA:</strong> Keep MAGI under $218k to avoid Medicare surcharges.</p>
             </div>
-
-            <button onclick="toggleManual()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black mt-8 text-center uppercase tracking-widest shadow-xl">
-                I Understand
-            </button>
+            <button onclick="toggleManual()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black mt-8 uppercase tracking-widest">Close Manual</button>
         </div>
     </div>
 
-    <div class="max-w-md mx-auto px-6 pt-24">
+    <div class="max-w-md mx-auto px-6 pt-28">
         <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-8 text-center">
-            <div id="irmaaBadge" class="inline-block text-[10px] font-black px-3 py-1 rounded-full mb-4">CHECKING...</div>
+            <div id="irmaaBadge" class="inline-block text-[10px] font-black px-3 py-1 rounded-full mb-4">CALCULATING...</div>
             <div class="h-3 w-full bg-slate-100 rounded-full overflow-hidden flex mb-4">
                 <div id="keepBar" class="bar-segment bg-emerald-400"></div>
                 <div id="fedBar" class="bar-segment bg-rose-400"></div>
                 <div id="caBar" class="bar-segment bg-rose-600"></div>
             </div>
-            <div class="flex justify-around text-[10px] font-bold text-slate-400">
-                <span>KEEP: <span id="keepPct" class="text-slate-900">0%</span></span>
-                <span>FED: <span id="fedPct" class="text-slate-900">0%</span></span>
+            <div class="flex justify-around text-[9px] font-black text-slate-400 uppercase">
+                <span>Keep: <span id="keepPct" class="text-slate-900">0%</span></span>
+                <span>Fed: <span id="fedPct" class="text-slate-900">0%</span></span>
                 <span>CA: <span id="caPct" class="text-slate-900">0%</span></span>
             </div>
         </div>
 
-        <div class="space-y-2">
+        <div class="space-y-1">
             <div class="input-card border-l-4 border-blue-500">
                 <label>Wife Salary (Gross)</label>
                 <input type="number" id="salary" value="125000" oninput="calculate()">
@@ -98,6 +84,10 @@
                 <input type="number" id="rrspG" value="0" oninput="calculate()">
             </div>
         </div>
+
+        <div id="scenarioList" class="mt-8 space-y-2 pb-10">
+            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2">Saved Strategy Lab</h3>
+            </div>
     </div>
 
     <div class="fixed bottom-6 left-6 right-6 max-w-md mx-auto z-40">
@@ -126,11 +116,6 @@
     </div>
 
     <script>
-        function toggleManual() {
-            const modal = document.getElementById('manualModal');
-            modal.classList.toggle('hidden');
-        }
-
         const getV = (id) => parseFloat(document.getElementById(id).value) || 0;
 
         function calculate() {
@@ -145,20 +130,18 @@
             const caTax = Math.max(0, calcTax(Math.max(0, (salaryTaxable + taxW + rrspG) - 11412), [0, 22158, 52528, 82904, 115084], [0.01, 0.02, 0.04, 0.06, 0.08]) - 596);
 
             const totTax = fedTax + caTax;
-            const net = grossCash - totTax;
-
             document.getElementById('totalCash').innerText = '$' + Math.round(grossCash).toLocaleString();
             document.getElementById('totalTax').innerText = '$' + Math.round(totTax).toLocaleString();
-            document.getElementById('netHome').innerText = '$' + Math.round(net).toLocaleString();
+            document.getElementById('netHome').innerText = '$' + Math.round(grossCash - totTax).toLocaleString();
             document.getElementById('effRate').innerText = ((totTax / (grossCash || 1)) * 100).toFixed(1) + '%';
             
             const fp = (fedTax / (grossCash || 1)) * 100, cp = (caTax / (grossCash || 1)) * 100;
             document.getElementById('fedBar').style.width = fp + '%';
             document.getElementById('caBar').style.width = cp + '%';
-            document.getElementById('keepBar').style.width = (100-fp-cp) + '%';
+            document.getElementById('keepBar').style.width = Math.max(0, 100-fp-cp) + '%';
             document.getElementById('fedPct').innerText = fp.toFixed(1) + '%';
             document.getElementById('caPct').innerText = cp.toFixed(1) + '%';
-            document.getElementById('keepPct').innerText = (100-fp-cp).toFixed(1) + '%';
+            document.getElementById('keepPct').innerText = Math.max(0, 100-fp-cp).toFixed(1) + '%';
 
             const b = document.getElementById('irmaaBadge');
             if (magi <= 218000) { b.innerText = "SAFE FROM IRMAA"; b.className = "inline-block text-[10px] font-black px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 mb-4 uppercase"; }
@@ -173,7 +156,46 @@
             return res;
         }
 
-        window.onload = calculate;
+        function toggleManual() { document.getElementById('manualModal').classList.toggle('hidden'); }
+
+        function resetInputs() {
+            ['salary','contrib','ss','taxW','rothW','rrspG'].forEach(id => document.getElementById(id).value = id === 'salary' ? 125000 : id === 'contrib' ? 25000 : id === 'ss' ? 43200 : 0);
+            calculate();
+        }
+
+        function saveScenario() {
+            const name = prompt("Name this strategy:");
+            if (!name) return;
+            const data = { name, sal: getV('salary'), con: getV('contrib'), ss: getV('ss'), taxW: getV('taxW'), rothW: getV('rothW'), rrspG: getV('rrspG') };
+            let saved = JSON.parse(localStorage.getItem('ret_strategies') || "[]");
+            saved.push(data);
+            localStorage.setItem('ret_strategies', JSON.stringify(saved));
+            renderScenarios();
+        }
+
+        function renderScenarios() {
+            const list = document.getElementById('scenarioList');
+            const saved = JSON.parse(localStorage.getItem('ret_strategies') || "[]");
+            list.innerHTML = `<h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 mb-2">Saved Strategies</h3>` + 
+                saved.map((s, i) => `
+                <div class="bg-white p-4 rounded-xl flex justify-between items-center shadow-sm border border-slate-100">
+                    <span class="font-bold text-slate-700 text-sm">${s.name}</span>
+                    <button onclick="loadScenario(${i})" class="text-blue-600 font-black text-[10px] uppercase bg-blue-50 px-3 py-1 rounded-md">Load</button>
+                </div>`).join('');
+        }
+
+        function loadScenario(i) {
+            const s = JSON.parse(localStorage.getItem('ret_strategies'))[i];
+            document.getElementById('salary').value = s.sal;
+            document.getElementById('contrib').value = s.con;
+            document.getElementById('ss').value = s.ss;
+            document.getElementById('taxW').value = s.taxW;
+            document.getElementById('rothW').value = s.rothW;
+            document.getElementById('rrspG').value = s.rrspG;
+            calculate();
+        }
+
+        window.onload = () => { calculate(); renderScenarios(); };
     </script>
 </body>
 </html>
